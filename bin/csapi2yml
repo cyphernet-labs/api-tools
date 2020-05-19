@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
+require 'set'
 
 require "bundler/setup"
-require "tools"
+require "lnp_api_tools"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
@@ -10,5 +11,45 @@ require "tools"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start(__FILE__)
+types = Set[]
+messages = []
+
+ARGF.each_line do |line|
+  messages << case line
+  when /^\s*$/
+    # Empty string, ignoring it
+  when /^\s*#/
+    # Comment string, ignoring it
+  when /^\s*msgtype,([\w\d]+),(\d+),?\s*(#.*)?$/
+    # Message definition
+    "  #{$2}: &#{$1}"
+  when /^\s*msgdata,([\w\d]+),([\w\d]+),([\w\d]+),\s*(#.*)?$/
+    types << $3
+    "    - &#{$2} { type: *#{$3} }"
+  when /^\s*msgdata,([\w\d]+),([\w\d]+),([\w\d]+),(\d+)\s*(#.*)?$/
+    types << $3
+    "    - &#{$2} { type: *#{$3}, len: #{$4} }"
+  when /^\s*msgdata,([\w\d]+),([\w\d]+),([\w\d]+),(\w[\w\d]*)\s*(#.*)?$/
+    types << $3
+    "    - &#{$2} { type: *#{$3}, len: *#{$4} }"
+  when /^\s*msgdata,([\w\d]+),([\w\d]+),\?([\w\d]+),\s*(#.*)?$/
+    types << $3
+    "    - &#{$2} { type: *#{$3}, optional: true }"
+  when /^\s*msgdata,([\w\d]+),([\w\d]+),enum\s+([\w\d]+),\s*(#.*)?$/
+    types << "u8"
+    "    - &#{$2} { type: *u8, enum: #{$3} }"
+  else
+    raise RuntimeError, "Unknown input: #{line}"
+  end
+end
+
+puts "types:"
+types.each do |type|
+  snake = type
+  pascal = type.split('_').collect(&:capitalize).join
+  camel = pascal[0].downcase + pascal[1..-1]
+  puts "  - &#{type} { c: #{snake}, cpp: #{pascal}, rust: #{pascal}, cs: #{pascal}, go: #{snake}, java: #{pascal}, js: #{pascal}, alt: #{camel} }"
+end
+
+puts "messages:"
+puts messages.join "\n"

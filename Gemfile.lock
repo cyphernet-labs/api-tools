@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    LNPAPITools (0.1.0)
+    lnp_api_tools (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -12,7 +12,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  LNPAPITools!
+  lnp_api_tools!
   rake (~> 12.0)
 
 BUNDLED WITH

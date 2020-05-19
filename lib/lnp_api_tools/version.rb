@@ -1,3 +1,3 @@
-module LNPAPITools
+module LnpApiTools
   VERSION = "0.1.0"
 end

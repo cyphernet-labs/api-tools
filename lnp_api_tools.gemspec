@@ -1,8 +1,8 @@
-require_relative 'lib/tools/version'
+require_relative 'lib/lnp_api_tools/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "LNPAPITools"
-  spec.version       = LNPAPITools::VERSION
+  spec.name          = "lnp_api_tools"
+  spec.version       = LnpApiTools::VERSION
   spec.authors       = ["Dr. Maxim Orlovsky"]
   spec.email         = ["<orlovsky@pandoracore.com>"]
 

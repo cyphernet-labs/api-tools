@@ -1,0 +1,261 @@
+types:
+  - &chainparams { c: chainparams, cpp: Chainparams, rust: Chainparams, cs: Chainparams, go: chainparams, java: Chainparams, js: Chainparams, alt: chainparams }
+  - &feature_set { c: feature_set, cpp: FeatureSet, rust: FeatureSet, cs: FeatureSet, go: feature_set, java: FeatureSet, js: FeatureSet, alt: featureSet }
+  - &bitcoin_txid { c: bitcoin_txid, cpp: BitcoinTxid, rust: BitcoinTxid, cs: BitcoinTxid, go: bitcoin_txid, java: BitcoinTxid, js: BitcoinTxid, alt: bitcoinTxid }
+  - &u16 { c: u16, cpp: U16, rust: U16, cs: U16, go: u16, java: U16, js: U16, alt: u16 }
+  - &amount_sat { c: amount_sat, cpp: AmountSat, rust: AmountSat, cs: AmountSat, go: amount_sat, java: AmountSat, js: AmountSat, alt: amountSat }
+  - &u32 { c: u32, cpp: U32, rust: U32, cs: U32, go: u32, java: U32, js: U32, alt: u32 }
+  - &channel_config { c: channel_config, cpp: ChannelConfig, rust: ChannelConfig, cs: ChannelConfig, go: channel_config, java: ChannelConfig, js: ChannelConfig, alt: channelConfig }
+  - &fee_states { c: fee_states, cpp: FeeStates, rust: FeeStates, cs: FeeStates, go: fee_states, java: FeeStates, js: FeeStates, alt: feeStates }
+  - &bitcoin_signature { c: bitcoin_signature, cpp: BitcoinSignature, rust: BitcoinSignature, cs: BitcoinSignature, go: bitcoin_signature, java: BitcoinSignature, js: BitcoinSignature, alt: bitcoinSignature }
+  - &per_peer_state { c: per_peer_state, cpp: PerPeerState, rust: PerPeerState, cs: PerPeerState, go: per_peer_state, java: PerPeerState, js: PerPeerState, alt: perPeerState }
+  - &pubkey { c: pubkey, cpp: Pubkey, rust: Pubkey, cs: Pubkey, go: pubkey, java: Pubkey, js: Pubkey, alt: pubkey }
+  - &basepoints { c: basepoints, cpp: Basepoints, rust: Basepoints, cs: Basepoints, go: basepoints, java: Basepoints, js: Basepoints, alt: basepoints }
+  - &u8 { c: u8, cpp: U8, rust: U8, cs: U8, go: u8, java: U8, js: U8, alt: u8 }
+  - &amount_msat { c: amount_msat, cpp: AmountMsat, rust: AmountMsat, cs: AmountMsat, go: amount_msat, java: AmountMsat, js: AmountMsat, alt: amountMsat }
+  - &node_id { c: node_id, cpp: NodeId, rust: NodeId, cs: NodeId, go: node_id, java: NodeId, js: NodeId, alt: nodeId }
+  - &bool { c: bool, cpp: Bool, rust: Bool, cs: Bool, go: bool, java: Bool, js: Bool, alt: bool }
+  - &changed_htlc { c: changed_htlc, cpp: ChangedHtlc, rust: ChangedHtlc, cs: ChangedHtlc, go: changed_htlc, java: ChangedHtlc, js: ChangedHtlc, alt: changedHtlc }
+  - &u64 { c: u64, cpp: U64, rust: U64, cs: U64, go: u64, java: U64, js: U64, alt: u64 }
+  - &existing_htlc { c: existing_htlc, cpp: ExistingHtlc, rust: ExistingHtlc, cs: ExistingHtlc, go: existing_htlc, java: ExistingHtlc, js: ExistingHtlc, alt: existingHtlc }
+  - &short_channel_id { c: short_channel_id, cpp: ShortChannelId, rust: ShortChannelId, cs: ShortChannelId, go: short_channel_id, java: ShortChannelId, js: ShortChannelId, alt: shortChannelId }
+  - &secret { c: secret, cpp: Secret, rust: Secret, cs: Secret, go: secret, java: Secret, js: Secret, alt: secret }
+  - &secp256k1_ecdsa_signature { c: secp256k1_ecdsa_signature, cpp: Secp256k1EcdsaSignature, rust: Secp256k1EcdsaSignature, cs: Secp256k1EcdsaSignature, go: secp256k1_ecdsa_signature, java: Secp256k1EcdsaSignature, js: Secp256k1EcdsaSignature, alt: secp256k1EcdsaSignature }
+  - &penalty_base { c: penalty_base, cpp: PenaltyBase, rust: PenaltyBase, cs: PenaltyBase, go: penalty_base, java: PenaltyBase, js: PenaltyBase, alt: penaltyBase }
+  - &sha256 { c: sha256, cpp: Sha256, rust: Sha256, cs: Sha256, go: sha256, java: Sha256, js: Sha256, alt: sha256 }
+  - &wirestring { c: wirestring, cpp: Wirestring, rust: Wirestring, cs: Wirestring, go: wirestring, java: Wirestring, js: Wirestring, alt: wirestring }
+  - &fulfilled_htlc { c: fulfilled_htlc, cpp: FulfilledHtlc, rust: FulfilledHtlc, cs: FulfilledHtlc, go: fulfilled_htlc, java: FulfilledHtlc, js: FulfilledHtlc, alt: fulfilledHtlc }
+  - &failed_htlc { c: failed_htlc, cpp: FailedHtlc, rust: FailedHtlc, cs: FailedHtlc, go: failed_htlc, java: FailedHtlc, js: FailedHtlc, alt: failedHtlc }
+  - &added_htlc { c: added_htlc, cpp: AddedHtlc, rust: AddedHtlc, cs: AddedHtlc, go: added_htlc, java: AddedHtlc, js: AddedHtlc, alt: addedHtlc }
+  - &bitcoin_tx { c: bitcoin_tx, cpp: BitcoinTx, rust: BitcoinTx, cs: BitcoinTx, go: bitcoin_tx, java: BitcoinTx, js: BitcoinTx, alt: bitcoinTx }
+  - &onionmsg_path { c: onionmsg_path, cpp: OnionmsgPath, rust: OnionmsgPath, cs: OnionmsgPath, go: onionmsg_path, java: OnionmsgPath, js: OnionmsgPath, alt: onionmsgPath }
+messages:
+
+
+
+
+
+
+
+
+  1000: &channel_init
+    - &chainparams { type: *chainparams }
+    - &our_features { type: *feature_set }
+    - &funding_txid { type: *bitcoin_txid }
+    - &funding_txout { type: *u16 }
+    - &funding_satoshi { type: *amount_sat }
+    - &minimum_depth { type: *u32 }
+    - &our_config { type: *channel_config }
+    - &their_config { type: *channel_config }
+    - &fee_states { type: *fee_states }
+    - &feerate_min { type: *u32 }
+    - &feerate_max { type: *u32 }
+    - &feerate_penalty { type: *u32 }
+    - &first_commit_sig { type: *bitcoin_signature }
+    - &per_peer_state { type: *per_peer_state }
+    - &remote_fundingkey { type: *pubkey }
+    - &remote_basepoints { type: *basepoints }
+    - &remote_per_commit { type: *pubkey }
+    - &old_remote_per_commit { type: *pubkey }
+    - &opener { type: *u8, enum: side }
+    - &fee_base { type: *u32 }
+    - &fee_proportional { type: *u32 }
+    - &local_msatoshi { type: *amount_msat }
+    - &our_basepoints { type: *basepoints }
+    - &our_funding_pubkey { type: *pubkey }
+    - &local_node_id { type: *node_id }
+    - &remote_node_id { type: *node_id }
+    - &commit_msec { type: *u32 }
+    - &cltv_delta { type: *u16 }
+    - &last_was_revoke { type: *bool }
+    - &num_last_sent_commit { type: *u16 }
+    - &last_sent_commit { type: *changed_htlc, len: *num_last_sent_commit }
+    - &next_index_local { type: *u64 }
+    - &next_index_remote { type: *u64 }
+    - &revocations_received { type: *u64 }
+    - &next_htlc_id { type: *u64 }
+    - &num_existing_htlcs { type: *u16 }
+    - &htlcs { type: *existing_htlc, len: *num_existing_htlcs }
+    - &local_funding_locked { type: *bool }
+    - &remote_funding_locked { type: *bool }
+    - &funding_short_id { type: *short_channel_id }
+    - &reestablish { type: *bool }
+    - &send_shutdown { type: *bool }
+    - &remote_shutdown_received { type: *bool }
+    - &final_scriptpubkey_len { type: *u16 }
+    - &final_scriptpubkey { type: *u8, len: *final_scriptpubkey_len }
+    - &flags { type: *u8 }
+    - &init_peer_pkt_len { type: *u16 }
+    - &init_peer_pkt { type: *u8, len: *init_peer_pkt_len }
+    - &reached_announce_depth { type: *bool }
+    - &last_remote_secret { type: *secret }
+    - &flen { type: *u16 }
+    - &their_features { type: *u8, len: *flen }
+    - &upfront_shutdown_script_len { type: *u16 }
+    - &upfront_shutdown_script { type: *u8, len: *upfront_shutdown_script_len }
+    - &remote_ann_node_sig { type: *secp256k1_ecdsa_signature, optional: true }
+    - &remote_ann_bitcoin_sig { type: *secp256k1_ecdsa_signature, optional: true }
+    - &option_static_remotekey { type: *bool }
+    - &dev_fast_gossip { type: *bool }
+    - &dev_fail_process_onionpacket { type: *bool }
+    - &num_penalty_bases { type: *u32 }
+    - &pbases { type: *penalty_base, len: *num_penalty_bases }
+
+
+  1002: &channel_funding_depth
+    - &short_channel_id { type: *short_channel_id, optional: true }
+    - &depth { type: *u32 }
+
+
+  1004: &channel_offer_htlc
+    - &amount_msat { type: *amount_msat }
+    - &cltv_expiry { type: *u32 }
+    - &payment_hash { type: *sha256 }
+    - &onion_routing_packet { type: *u8, len: 1366 }
+    - &blinding { type: *pubkey, optional: true }
+
+
+  1104: &channel_offer_htlc_reply
+    - &id { type: *u64 }
+
+    - &len { type: *u16 }
+    - &failuremsg { type: *u8, len: *len }
+    - &failurestr { type: *wirestring }
+
+
+
+  1005: &channel_fulfill_htlc
+    - &fulfilled_htlc { type: *fulfilled_htlc }
+
+
+  1006: &channel_fail_htlc
+    - &failed_htlc { type: *failed_htlc }
+
+
+  1019: &channel_got_funding_locked
+    - &next_per_commit_point { type: *pubkey }
+
+
+
+
+  1020: &channel_sending_commitsig
+    - &commitnum { type: *u64 }
+    - &pbase { type: *penalty_base, optional: true }
+    - &fee_states { type: *fee_states }
+
+    - &num_changed { type: *u16 }
+    - &changed { type: *changed_htlc, len: *num_changed }
+    - &commit_sig { type: *bitcoin_signature }
+    - &num_htlc_sigs { type: *u16 }
+    - &htlc_sigs { type: *secp256k1_ecdsa_signature, len: *num_htlc_sigs }
+
+
+  1120: &channel_sending_commitsig_reply
+
+
+  1021: &channel_got_commitsig
+    - &commitnum { type: *u64 }
+    - &fee_states { type: *fee_states }
+    - &signature { type: *bitcoin_signature }
+    - &num_htlcs { type: *u16 }
+    - &htlc_signature { type: *secp256k1_ecdsa_signature, len: *num_htlcs }
+
+    - &num_added { type: *u16 }
+    - &added { type: *added_htlc, len: *num_added }
+
+    - &num_fulfilled { type: *u16 }
+    - &fulfilled { type: *fulfilled_htlc, len: *num_fulfilled }
+    - &num_failed { type: *u16 }
+    - &failed { type: *failed_htlc, len: *num_failed }
+
+    - &num_changed { type: *u16 }
+    - &changed { type: *changed_htlc, len: *num_changed }
+    - &tx { type: *bitcoin_tx }
+
+
+  1121: &channel_got_commitsig_reply
+
+
+
+  1022: &channel_got_revoke
+    - &revokenum { type: *u64 }
+    - &per_commitment_secret { type: *secret }
+    - &next_per_commit_point { type: *pubkey }
+
+    - &fee_states { type: *fee_states }
+    - &num_changed { type: *u16 }
+    - &changed { type: *changed_htlc, len: *num_changed }
+    - &pbase { type: *penalty_base, optional: true }
+    - &penalty_tx { type: *bitcoin_tx, optional: true }
+
+
+  1122: &channel_got_revoke_reply
+
+
+  1023: &channel_send_shutdown
+    - &shutdown_len { type: *u16 }
+    - &shutdown_scriptpubkey { type: *u8, len: *shutdown_len }
+
+
+  1024: &channel_got_shutdown
+    - &scriptpubkey_len { type: *u16 }
+    - &scriptpubkey { type: *u8, len: *scriptpubkey_len }
+
+
+  1025: &channel_shutdown_complete
+    - &per_peer_state { type: *per_peer_state }
+
+
+  1026: &channel_dev_reenable_commit
+  1126: &channel_dev_reenable_commit_reply
+
+  1027: &channel_feerates
+    - &feerate { type: *u32 }
+    - &min_feerate { type: *u32 }
+    - &max_feerate { type: *u32 }
+    - &penalty_feerate { type: *u32 }
+
+
+  1033: &channel_dev_memleak
+
+  1133: &channel_dev_memleak_reply
+    - &leak { type: *bool }
+
+
+  1028: &channel_fail_fallen_behind
+
+    - &remote_per_commitment_point { type: *pubkey, optional: true }
+
+
+  1029: &channel_specific_feerates
+    - &feerate_base { type: *u32 }
+    - &feerate_ppm { type: *u32 }
+
+
+  1017: &channel_got_announcement
+    - &remote_ann_node_sig { type: *secp256k1_ecdsa_signature }
+    - &remote_ann_bitcoin_sig { type: *secp256k1_ecdsa_signature }
+
+
+  1008: &channel_send_error
+    - &reason { type: *wirestring }
+
+
+  1108: &channel_send_error_reply
+
+
+  1142: &got_onionmsg_to_us
+    - &reply_blinding { type: *pubkey, optional: true }
+    - &reply_path_len { type: *u16 }
+    - &reply_path { type: *onionmsg_path, len: *reply_path_len }
+
+  1143: &got_onionmsg_forward
+    - &next_scid { type: *short_channel_id, optional: true }
+    - &next_node_id { type: *node_id, optional: true }
+    - &next_blinding { type: *pubkey, optional: true }
+    - &next_onion { type: *u8, len: 1366 }
+
+
+  1040: &send_onionmsg
+    - &onion { type: *u8, len: 1366 }
+    - &blinding { type: *pubkey, optional: true }
