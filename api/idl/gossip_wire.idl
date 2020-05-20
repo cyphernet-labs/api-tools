@@ -1,0 +1,131 @@
+type chainparams
+type feature_set
+type node_id
+type u8
+type u16
+type wireaddr
+type u32
+type bool
+type gossip_getnodes_entry
+type amount_msat
+type u64
+type exclude_entry
+type route_hop
+type short_channel_id
+type gossip_getchannels_entry
+type amount_sat
+type route_info
+
+message 3000 @gossipctl_init:
+  chainparams @chainparams
+  feature_set @our_features
+  node_id @id
+  u8*3 @rgb
+  u8*32 @alias
+  u16 @num_announcable
+  wireaddr*&num_announcable @announcable
+  u32? @dev_gossip_time
+  bool @dev_fast_gossip
+  bool @dev_fast_gossip_prune
+
+message 3001 @gossip_dev_set_time:
+  u32 @dev_gossip_time
+
+message 3005 @gossip_getnodes_request:
+  node_id? @id
+
+message 3105 @gossip_getnodes_reply:
+  u32 @num_nodes
+  gossip_getnodes_entry*&num_nodes @nodes
+
+message 3006 @gossip_getroute_request:
+  node_id? @source
+  node_id @destination
+  amount_msat @msatoshi
+  u64 @riskfactor_millionths
+  u32 @final_cltv
+  u64 @fuzz_millionths
+  u16 @num_excluded
+  exclude_entry*&num_excluded @excluded
+  u32 @max_hops
+
+message 3106 @gossip_getroute_reply:
+  u16 @num_hops
+  route_hop*&num_hops @hops
+
+message 3007 @gossip_getchannels_request:
+  short_channel_id? @short_channel_id
+  node_id? @source
+  short_channel_id? @prev
+
+message 3107 @gossip_getchannels_reply:
+  bool @complete
+  u32 @num_channels
+  gossip_getchannels_entry*&num_channels @nodes
+
+message 3008 @gossip_ping:
+  node_id @id
+  u16 @num_pong_bytes
+  u16 @len
+
+message 3108 @gossip_ping_reply:
+  node_id @id
+  bool @sent
+  u16 @totlen
+
+message 3030 @gossip_dev_set_max_scids_encode_size:
+  u32 @max
+
+message 3010 @gossip_get_stripped_cupdate:
+  short_channel_id @channel_id
+
+message 3110 @gossip_get_stripped_cupdate_reply:
+  u16 @stripped_update_len
+  u8*&stripped_update_len @stripped_update
+
+message 3027 @gossip_local_channel_close:
+  short_channel_id @short_channel_id
+
+message 3018 @gossip_get_txout:
+  short_channel_id @short_channel_id
+
+message 3118 @gossip_get_txout_reply:
+  short_channel_id @short_channel_id
+  amount_sat @satoshis
+  u16 @len
+  u8*&len @outscript
+
+message 3021 @gossip_payment_failure:
+  node_id @erring_node
+  short_channel_id @erring_channel
+  u8 @erring_channel_direction
+  u16 @len
+  u8*&len @error
+
+message 3024 @gossip_outpoint_spent:
+  short_channel_id @short_channel_id
+
+message 3032 @gossip_dev_suppress:
+
+message 3033 @gossip_dev_memleak:
+
+message 3133 @gossip_dev_memleak_reply:
+  bool @leak
+
+message 3034 @gossip_dev_compact_store:
+
+message 3134 @gossip_dev_compact_store_reply:
+  bool @success
+
+message 3025 @gossip_get_incoming_channels:
+
+message 3125 @gossip_get_incoming_channels_reply:
+  u16 @num_public
+  route_info*&num_public @public_route_info
+  bool*&num_public @public_deadends
+  u16 @num_private
+  route_info*&num_private @private_route_info
+  bool*&num_private @private_deadends
+
+message 3026 @gossip_new_blockheight:
+  u32 @blockheight

@@ -1,0 +1,27 @@
+type u8
+type node_id
+type wirestring
+type u16
+type bool
+
+message 0xFFF0 @status_log:
+  log_level(enum) @level
+  node_id? @peer
+  wirestring @entry
+
+message 0xFFF1 @status_io:
+  log_level(enum) @iodir
+  node_id? @peer
+  wirestring @who
+  u16 @len
+  u8*&len @data
+
+message 0xFFF2 @status_fail:
+  status_failreason(enum) @failreason
+  wirestring @desc
+
+message 0xFFF3 @status_peer_connection_lost:
+
+message 0xFFF5 @status_peer_billboard:
+  bool @perm
+  wirestring @happenings

@@ -1,0 +1,118 @@
+type shachain
+type chainparams
+type amount_sat
+type amount_msat
+type pubkey
+type u32
+type bitcoin_txid
+type u16
+type u8
+type basepoints
+type bitcoin_tx
+type secp256k1_ecdsa_signature
+type u64
+type bool
+type htlc_stub
+type preimage
+type chain_coin_mvt
+
+message 5001 @onchain_init:
+  shachain @shachain
+  chainparams @chainparams
+  amount_sat @funding_amount_satoshi
+  amount_msat @our_msat
+  pubkey @old_remote_per_commitment_point
+  pubkey @remote_per_commitment_point
+  u32 @local_to_self_delay
+  u32 @remote_to_self_delay
+  u32 @delayed_to_us_feerate
+  u32 @htlc_feerate
+  u32 @penalty_feerate
+  amount_sat @local_dust_limit_satoshi
+  bitcoin_txid @our_broadcast_txid
+  u16 @local_scriptpubkey_len
+  u8*&local_scriptpubkey_len @local_scriptpubkey
+  u16 @remote_scriptpubkey_len
+  u8*&remote_scriptpubkey_len @remote_scriptpubkey
+  pubkey @ourwallet_pubkey
+  side(enum) @opener
+  basepoints @local_basepoints
+  basepoints @remote_basepoints
+  bitcoin_tx @tx
+  u32 @tx_blockheight
+  u32 @reasonable_depth
+  u16 @num_htlc_sigs
+  secp256k1_ecdsa_signature*&num_htlc_sigs @htlc_signature
+  u64 @num_htlcs
+  u32 @min_possible_feerate
+  u32 @max_possible_feerate
+  pubkey? @possible_remote_per_commit_point
+  bool @option_static_remotekey
+  bool @is_replay
+
+message 5002 @onchain_htlc:
+  htlc_stub @htlc
+  bool @tell_if_missing
+  bool @tell_immediately
+
+message 5101 @onchain_init_reply:
+
+message 5003 @onchain_broadcast_tx:
+  bitcoin_tx @tx
+  wallet_tx_type(enum) @type
+
+message 5004 @onchain_spent:
+  bitcoin_tx @tx
+  u32 @input_num
+  u32 @blockheight
+  bool @is_replay
+
+message 5005 @onchain_depth:
+  bitcoin_txid @txid
+  u32 @depth
+  bool @is_replay
+
+message 5006 @onchain_unwatch_tx:
+  bitcoin_txid @txid
+
+message 5007 @onchain_known_preimage:
+  preimage @preimage
+  bool @is_replay
+
+message 5008 @onchain_extracted_preimage:
+  preimage @preimage
+
+message 5009 @onchain_missing_htlc_output:
+  htlc_stub @htlc
+
+message 5010 @onchain_htlc_timeout:
+  htlc_stub @htlc
+
+message 5011 @onchain_all_irrevocably_resolved:
+
+message 5012 @onchain_add_utxo:
+  bitcoin_txid @prev_out_tx
+  u32 @prev_out_index
+  pubkey? @per_commit_point
+  amount_sat @value
+  u32 @blockheight
+  u16 @len
+  u8*&len @scriptpubkey
+
+message 5033 @onchain_dev_memleak:
+
+message 5133 @onchain_dev_memleak_reply:
+  bool @leak
+
+message 5035 @onchain_annotate_txout:
+  bitcoin_txid @txid
+  u32 @outnum
+  wallet_tx_type(enum) @type
+
+message 5036 @onchain_annotate_txin:
+  bitcoin_txid @txid
+  u32 @innum
+  wallet_tx_type(enum) @type
+
+message 5037 @onchain_notify_coin_mvt:
+  chain_coin_mvt @mvt

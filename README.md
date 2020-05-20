@@ -10,8 +10,9 @@ Clone this repo or run
 
 ## Usage
 
-    $ bin/csapi-collect.sh
-    $ bin/csapi-convert.sh
+    $ bin/csapi-process.sh
+
+Check `api` subdirectories then
 
 ## Contributing
 

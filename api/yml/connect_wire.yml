@@ -21,7 +21,7 @@ messages:
     - { name: id, type: *node_id }
     - { name: num_wireaddrs, type: *u16 }
     - { name: wireaddrs, type: *wireaddr_internal, len_var: num_wireaddrs }
-    - { name: listen_announce, type: *u8, enum: addr_listen_announce len: *num_wireaddrs }
+    - { name: listen_announce, type: *u8, enum: addr_listen_announce len_var: num_wireaddrs }
     - { name: tor_proxyaddr, type: *wireaddr, optional: true }
     - { name: use_tor_proxy_always, type: *bool }
     - { name: dev_allow_localhost, type: *bool }

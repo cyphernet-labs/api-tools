@@ -1,0 +1,51 @@
+type chainparams
+type per_peer_state
+type bitcoin_txid
+type u16
+type amount_sat
+type pubkey
+type u8
+type u64
+type bool
+type secret
+type bitcoin_signature
+type bitcoin_tx
+
+message 2001 @closing_init:
+  chainparams @chainparams
+  per_peer_state @pps
+  bitcoin_txid @funding_txid
+  u16 @funding_txout
+  amount_sat @funding_satoshi
+  pubkey @local_fundingkey
+  pubkey @remote_fundingkey
+  side(enum) @opener
+  amount_sat @local_sat
+  amount_sat @remote_sat
+  amount_sat @our_dust_limit
+  amount_sat @min_fee_satoshi
+  amount_sat @fee_limit_satoshi
+  amount_sat @initial_fee_satoshi
+  u16 @local_scriptpubkey_len
+  u8*&local_scriptpubkey_len @local_scriptpubkey
+  u16 @remote_scriptpubkey_len
+  u8*&remote_scriptpubkey_len @remote_scriptpubkey
+  u64 @fee_negotiation_step
+  u8 @fee_negotiation_step_unit
+  bool @reconnected
+  u64 @next_index_local
+  u64 @next_index_remote
+  u64 @revocations_received
+  u16 @channel_reestablish_len
+  u8*&channel_reestablish_len @channel_reestablish
+  secret @last_remote_secret
+  bool @dev_fast_gossip
+
+message 2002 @closing_received_signature:
+  bitcoin_signature @signature
+  bitcoin_tx @tx
+
+message 2102 @closing_received_signature_reply:
+  bitcoin_txid @closing_txid
+
+message 2004 @closing_complete:

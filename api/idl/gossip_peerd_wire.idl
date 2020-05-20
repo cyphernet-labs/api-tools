@@ -1,0 +1,39 @@
+type short_channel_id
+type u16
+type u8
+type node_id
+type amount_sat
+type bool
+type amount_msat
+type u32
+type u64
+
+message 3501 @gossipd_get_update:
+  short_channel_id @short_channel_id
+
+message 3601 @gossipd_get_update_reply:
+  u16 @len
+  u8*&len @update
+
+message 3503 @gossipd_local_add_channel:
+  short_channel_id @short_channel_id
+  node_id @remote_node_id
+  amount_sat @satoshis
+  u16 @flen
+  u8*&flen @features
+
+message 3504 @gossipd_local_channel_update:
+  short_channel_id @short_channel_id
+  bool @disable
+  u16 @cltv_expiry_delta
+  amount_msat @htlc_minimum_msat
+  u32 @fee_base_msat
+  u32 @fee_proportional_millionths
+  amount_msat @htlc_maximum_msat
+
+message 3505 @gossipd_new_store_fd:
+  u64 @offset_shorter
+
+message 3506 @gossipd_local_channel_announcement:
+  u16 @len
+  u8*&len @cannount
