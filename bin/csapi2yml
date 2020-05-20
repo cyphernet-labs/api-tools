@@ -45,7 +45,7 @@ ARGF.each_line do |line|
     "    - { name: #{$2}, type: *#{$3}, optional: true, len_var: #{4} }"
   when /^\s*msgdata,([\w\d]+),([\w\d]+),enum\s+([\w\d]+),(\w[\w\d]*)?\s*(#.*)?$/
     types << "u8"
-    "    - { name: #{$2}, type: *u8, enum: #{$3}#{$4 ? ' len_var: ' + $4 : ''} }"
+    "    - { name: #{$2}, type: *u8, enum: #{$3}#{$4 ? ', len_var: ' + $4 : ''} }"
   else
     raise RuntimeError, "Unknown input: #{line}"
   end
