@@ -1,1 +1,0 @@
-#!/bin/shgit clone https://github.com/ElementsProject/lightning.gitmkdir -p apifind . -name "*.csv" -type f -exec cp {} api/ +rm -rf lightningfor f in api/*.csv; do mv -- "$f" "${f%.csv}.csapi"; done
