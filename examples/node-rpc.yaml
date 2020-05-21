@@ -1,0 +1,96 @@
+# Generic node RPC protocol (sample)
+
+imports:
+  rust: "use secp256k1"
+  c: "#include<secp256k1>"
+
+# This is not a part of YAML standard and have to be simulated.
+# However, with this feature scheme validations will be impossible
+include:
+  - other_if.lidl
+
+# We have to put vocabulary upfront in YAML so bindings can be valid
+vocabulary:
+  - &public_key:
+    c: secp256k1_pubkey
+    rust: secp256k1::PublicKey
+  - &key_value:
+    rust:
+      transform: pascal-case
+    cpp:
+      transform: pascal-case
+    c:
+      transform: snake-case
+    ruby:
+      transform: snake-case
+    java:
+      transform: camel-case
+    scala:
+      transform: camel-case
+    go: map
+  - &bytestring:
+    c: unsigned char*
+    rust: Vec<u8>
+  - &flags
+    c: enum flags
+    rust: Flags
+  - &sha256
+    c: unsigned char[32]
+    rust: bitcoin::sha256::Hash
+
+types:
+  - &pubkey *public_key
+  - &node_type *node_type
+  # Can't be done with YAML: we can't use the same name for
+  # a vocabulary entry and type - and it will be wrong
+  # to make all vocabulary keywords type names by default
+  - &bytestring: *bytestring
+
+structs:
+  - &kv
+    name: key_value
+    values:
+      - occ_range: 1..64
+        len: 1
+        type: *string
+        name: key
+      - occ_range: 1..0xFF
+        len: 1
+        type: *string
+        name: vaue
+
+messages:
+  - &info
+    name: info
+    type: 1045
+    fields:
+      - occ_range: 1..64
+        len: 33
+        type: *pubkey
+        name: node_id
+      - occ_optional: true
+        len: 1
+        type: *node_type
+        name: node_type
+      - occ_range: 0..5
+        len:
+          varint: true
+          encoding: lightning
+        type: *flags
+        name: flags
+      - occ_range: 1..0xFF
+        len:
+          range: 2..320
+          encoding: strict
+        type: *kv
+        name: meta
+
+streams:
+  - name: networks
+    message: *info
+    type: 8465
+    fields:
+      - occ_range: 1..32
+        len: 32
+        type: *sha256
+        name: network

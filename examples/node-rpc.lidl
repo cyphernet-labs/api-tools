@@ -1,0 +1,116 @@
+# Generic node RPC protocol (sample)
+
+# Lines that start with `%` defines "streaming parameters", which affect behaviour of
+# code generator until the next parameter is met. They must be followed by the parameter
+# name (reserved word) with optional equal sign and a value for that parameter.
+#
+# We can use different encodings, like bitcoin-consensus, lightning and strict (used by RGB).
+# Each of them defines some additional data types (like `ci` for compact size integer in ln
+# or `vi` for big size type in bitcoin) AND define exact methods which are called for data
+# structure serialization and deserialization during the code generation. Also, encoding
+# defines how the length of array-like structures is encoded
+
+%encoding=strict
+
+imports rust
+	use secp256k1
+
+imports c
+	#include<secp256k1>
+
+# File is parsed line by line.
+# The lines must start with either `%`, one of reserved keyword (denoting block) or
+# whitespace, indicating that the line is the part of the current block opened with
+# the keyword
+
+# `type` keyword defines a type name that may be used by fields and binds it to a
+# vocabulary definition. Vocabulary bindings are always start with `&` sign; an empty
+# sign or omitted vocabulary binding means that the same keyword is used for vocabulary
+# binding as the previous word.
+
+type pubkey &public_key
+type bytestring &
+type flags
+type sha256
+
+# may be an enum type: defined by the actual class/data type that has a name matching
+# `node_type` keyword in the *vocabulary* (see the end of the file)
+type node_type &
+
+# `struct`s define a complex/composed data types; they are used for TLVs
+# or normal payload records if required
+# Here we define a key-value mapping entry
+struct kv &key_value
+	# Fields are encoded in a table-like manner, with the following "columns":
+	# - bounds for the number of data occurrences
+	# - bounds for the data structure length
+	# - data structure type
+	# - vocabulary keyword
+	# Bounds are specified with in the following ways:
+	# - unsigned integer means that there always MUST be exactly this number of
+	#   occurrences/bytes in the data structure; this number is not encoded in
+	#   the data stream since it is a constant
+	# - range of two unsigned integers made with `..` between them;
+	#   it MUST be always encoded in the stream; the exact encoding format depends
+	#   on the encoding used; for instance in RGB it's always `u16`, in lightning -
+	#   compact size integer etc
+	# - `^` before the upper bound in range specifies the exponent of 2 that have
+	#   to be used (for instance, `1..^8` means `1..0xFF`
+	# - `?` is syntactic sugar for `0..1` (i.e. once or none; meaning optional value)
+	# - `.` is a shorthand for `1` for readability purposes
+	# - `*` means "from zero up to the maximum possible number of occurrences";
+	#   this type MUST not be used when the strict encoding is not in place
+	#   (since both lightning and bitcoin consensus encodings have 2^64 possible
+	#   maximum number)
+	# - `+` means "from one up to the maximum possible number of occurrences"
+	#   (the same rules as for `*` applies)
+
+	1       1..64   bytestring      &key
+	1       1..^8   bytestring      &value
+
+message 1045 info &
+	1       33      pubkey          &node_id
+	?       1       node_type       &
+
+	# `varint` stands for `variable size integer`; it may be present only if
+	# lightning or bitcoin-consensus encodings is used.
+	# It implies `1..9` as a value for the length bounds
+%encoding=lightning
+	0..5    varint  flags           &
+%encoding=strict
+	1..^8   2..320  kv              &meta
+
+# TLV record definition. Separating them from messages makes really simple
+# addition of TLV extensions in separate files to some existing message set
+extension info 8465 networks &
+	1..32   32      sha256          &network
+
+
+# Vocabularies are used to
+vocabulary
+	# Each vocabulary item is a comma-separated list of languages
+	# with a language-specific type name given in parethesis after
+	# the language name
+	public_key      c(secp256k1_pubkey), rust(secp256k1::PublicKey)
+
+	# Languages can share the same name; for this aim their names
+	# must be united with `|` sign
+	# Also, to indicate that the language uses the same name as
+	# the vocabulary keyword three options may be used:
+	# - `^` sign, indicating that the name must be *pascalized*
+	#       (`KeyValue` in our case)
+	# - `_` sign, indicating that the name must be *snake-cased*
+	#       (`key_value`)
+	# - `~` sign, indicating that the name must be *camelized*
+	#       (`keyValue`)
+	# - `!` sign, indicating that the name must be *all-caps*
+	#       (`KEY_VALUE`)
+	key_value       rust|cpp(^), c|ruby(_), java|scala(~), go(map)
+
+	bytestring      c(unsigned char*), rust(Vec<u8>)
+	flags           c(enum flags), rust(Flags) # This is enum
+	sha256          c(unsigned char[32]), rust(bitcoin::sha256::Hash)
+
+# We may include other interface definition files or vocabularies with
+# `include` keyword
+include other_if.lidl

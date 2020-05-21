@@ -1,0 +1,46 @@
+
+type amount u64 .. *
+type timestamp u32 .. *
+type bin [u32]u8 .. *
+
+field 1 string ticker
+field 2 string name
+field 3 string description
+field 4 amount total_supply
+field 5 amount issued_supply
+field 6 amount dust_limit
+field 7 bin prune_proof
+field 8 timestamp timestamp
+
+assignment 1 void issue
+assignment 2 homomorphic(amount) assets
+assignment 3 void prune
+
+genesis
+	meta
+		.       ticker
+		.       name
+		?       description
+		.       total_supply
+		.       issued_supply
+		?       dust_limit
+		.       fractional_bits
+	defines
+		?       issue
+		*       assets
+		*       prune
+	validation std     issue_control
+	extensions denied
+
+transition 0 issue
+	meta
+		!       issued_supply
+	closes
+		!       issue
+	defines
+		?       issue
+		*       prune
+		*       assets
+	validation std     issue_control
+	extensions denied
+

@@ -1,0 +1,8 @@
+
+entity type
+	. string name
+	. type
+	. occurrences
+	? alias
+
+entity field

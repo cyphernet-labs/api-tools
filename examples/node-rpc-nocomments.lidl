@@ -1,0 +1,40 @@
+# Generic node RPC protocol (sample)
+
+%encoding=strict
+
+imports rust
+	use secp256k1
+
+imports c
+	#include<secp256k1>
+
+type pubkey &public_key
+type bytestring
+type flags
+type sha256
+type node_type
+
+struct kv &key_value
+	1       1..64   bytestring      &key
+	1       1..^8   bytestring      &value
+
+message 1045 info &
+	1       33      pubkey          &node_id
+	?       1       node_type       &
+%encoding=lightning
+	0..5    varint  flags           &
+%encoding=strict
+	1..^8   2..320  kv              &meta
+
+extension info 8465 networks &
+	1..32   32      sha256          &network
+
+
+vocabulary
+	public_key      c(secp256k1_pubkey), rust(secp256k1::PublicKey)
+	key_value       rust|cpp(^), c|ruby(_), java|scala(~), go(map)
+	bytestring      c(unsigned char*), rust(Vec<u8>)
+	flags           c(enum flags), rust(Flags) # This is enum
+	sha256          c(unsigned char[32]), rust(bitcoin::sha256::Hash)
+
+include other_if.lidl
