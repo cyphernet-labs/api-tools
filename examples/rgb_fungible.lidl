@@ -1,7 +1,7 @@
 
-type amount u64 .. *
-type timestamp u32 .. *
-type bin [u32]u8 .. *
+type u64 * amount
+type u32 * timestamp
+type [u32]u8 * bin
 
 field 1 string ticker
 field 2 string name

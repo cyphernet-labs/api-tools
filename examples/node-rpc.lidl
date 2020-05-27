@@ -86,7 +86,8 @@ extension info 8465 networks &
 	1..32   32      sha256          &network
 
 
-# Vocabularies are used to
+# Vocabularies are used to provide language-specific identity names for
+# data types, structures etc.
 vocabulary
 	# Each vocabulary item is a comma-separated list of languages
 	# with a language-specific type name given in parethesis after

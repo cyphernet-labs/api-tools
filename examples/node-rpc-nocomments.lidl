@@ -1,3 +1,4 @@
+
 # Generic node RPC protocol (sample)
 
 %encoding=strict
@@ -21,11 +22,10 @@ struct kv &key_value
 message 1045 info &
 	1       33      pubkey          &node_id
 	?       1       node_type       &
-%encoding=lightning
 	0..5    varint  flags           &
-%encoding=strict
 	1..^8   2..320  kv              &meta
 
+%encoding=lightning
 extension info 8465 networks &
 	1..32   32      sha256          &network
 
@@ -38,3 +38,4 @@ vocabulary
 	sha256          c(unsigned char[32]), rust(bitcoin::sha256::Hash)
 
 include other_if.lidl
+
