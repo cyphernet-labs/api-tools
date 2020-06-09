@@ -1,0 +1,52 @@
+%YAML 1.2
+%TAG !strict! tag:https://lnp-bp.org/lnp/strict.yaml
+---
+name: wallet
+desctiption: Strinct encoding according to _____
+author: Dr Maxim Orlovsky <orlovsky@pandoracore.com>
+---
+
+types:
+  xpubid: !strict!hash160
+
+  xpubkey: !!array
+    item: !!u8
+    len: 64
+
+  xprivkey: !!array
+    item: !!u8
+    len: 64
+
+  derivation_path: !strict!array
+    item: child_number
+    max: 16
+
+  child_number: !strict!enum
+    0:
+      name: normal
+      fields:
+        - index: !!u32
+    1:
+      name: hardened
+      fields:
+        - index: !!u32
+
+  key_fingerprint: !!array
+    item: !!u8
+    len: 4
+
+vocabulary:
+  types:
+    xpubid:
+      rust: XpubIdentifier
+    xpubkey:
+      rust: ExtendedPrivKey
+    xprivkey:
+      rust: ExtendedPubKey
+    key_fingerprint:
+      rust: Fingerprint
+
+lang:
+  rust: >
+    use lnpbp::bitcoin::util::bip32::{ExtendedPrivKey, ExtendedPubKey, DerivationPath, ChildNumber, Fingerprint};
+    use lnpbp::bitcoin::hash_types::XpubIdentifier;
