@@ -1,6 +1,6 @@
 # Generic node RPC protocol (sample)
 
-# Lines that start with `%` defines "streaming parameters", which affect behaviour of
+# Lines that start with `%` define "streaming parameters", which affect behaviour of
 # code generator until the next parameter is met. They must be followed by the parameter
 # name (reserved word) with optional equal sign and a value for that parameter.
 #
@@ -24,7 +24,7 @@ imports c
 # the keyword
 
 # `type` keyword defines a type name that may be used by fields and binds it to a
-# vocabulary definition. Vocabulary bindings are always start with `&` sign; an empty
+# vocabulary definition. Vocabulary bindings always start with `&` sign; an empty
 # sign or omitted vocabulary binding means that the same keyword is used for vocabulary
 # binding as the previous word.
 
